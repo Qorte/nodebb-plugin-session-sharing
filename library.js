@@ -33,6 +33,7 @@ var profileFields = [
 ];
 var payloadKeys = profileFields.concat([
 	'id', // the uniq identifier of that account
+	'sub', // another uniq identifier of that account
 	'firstName', // for backwards compatibillity
 	'lastName', // dto.
 	'picture',
@@ -169,6 +170,8 @@ plugin.normalizePayload = function (payload, callback) {
 			userData[key] = payload[propName];
 		}
 	});
+
+    userData.id = userData.id || userData.sub;
 
 	if (!userData.id) {
 		winston.warn('[session-sharing] No user id was given in payload');
